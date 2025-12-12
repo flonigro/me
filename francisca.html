@@ -1,102 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>francisca - Theoretical Physicist</title>
-    <link rel="stylesheet" href="francisca.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-</head>
+<html>
 <body>
-    
-    <header id="Home">
-        <div class="container-hero">
-            <h1>FRANCESCA LONIGRO</h1>
-            <p class="subtitle">8</p>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#PhD">PhD</a></li>
-                <li><a href="#TheoreticalPhysics">Theoretical Physics</a></li>
-                <li><a href="#Innovation">Insurance Innovation</a></li>
-                <li><a href="#Interests">Interests</a></li>
-                <li><a href="#Chaos">🌀 CHAOS</a></li>
-                <li><a href="#Contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <section id="PhD" class="academic-focus">
-        <h2>PhD</h2>
-        <div class="content-block">
-            <p>My Doctoral research focuse is on the combination of artificial intelligence and fundamental interactions. In particular, I study the strong interaction!</p>
-            
-          
-            <a href="link_to_thesis" class="button-link">Read Full Abstract</a>
-        </div>
-    </section>
+<h1>Web Worker API</h1>
 
-    <section id="TheoreticalPhysics" class="academic-foundation">
-        <h2>Theoretical Physics</h2>
-        <p>The Master's in Theoretical Physics, University of Turin(Italy). In the thesis work, with the group "Physics beyond the Standard Proton" with Prof. Maria Ubiali at the University of Cambridge (UK), we searched for New Physics!</p>
-        
-    </section>
+<p>Count numbers: <output id="result"></output></p>
+<button onclick="startWorker()">Start Worker</button> 
+<button onclick="stopWorker()">Stop Worker</button>
 
-    <section id="Innovation" class="applied-science">
-        <h2>Master in Insurance Innovation: Quantum Management</h2>
-        <p>This Master's at the Collegio Carlo Alberto (University of Turin, Italy) represents the bridge between the mathematical rigor of physics and the practical application in the real world of risk and finance.</p>
-        
-        <div class="project-summary">
-            <p>Transfer of complexity modeling methodologies for:</p>
-            <ul>
-                <li>Advanced Actuarial and Operational Risk Evaluation.</li>
-                <li>Development of insurance products based on non-linear data.</li>
-                <li>Study of technology implications (e.g., AI/Blockchain) in the sector.</li>
-            </ul>
-        </div>
-    </section>
+<script>
+let w;
 
-    <section id="Interests" class="interests-section">
-        <h2>Hybrid Thinking: Beyond Specialization</h2>
-        
-        <div class="interest-block" id="Quantum">
-            <h3>Quantum Computing & Fundamentals</h3>
-      
-        </div>
-        
-        <div class="interest-block" id="Teaching">
-            <h3>Teaching and Tutoring</h3>
-            <p>I believe that true understanding lies in the ability to explain. Consolidated experience and passion for disseminating complex concepts across diverse disciplines:</p>
-            
-            <ul>
-                <li>Computational Techniques for Physics</li>
-                <li>Classical Physics</li>
-                <li>Quantum Physics</li>
-                <li>Field Theory</li>
-                <li>Mathematical Methods of Machine Learning</li>
-                <li>Biochemistry</li>
-            </ul>
-         
-        </div>
-    </section>
+function startWorker() {
+  const x = document.getElementById("result");
+  if(typeof(Worker) !== "undefined") {
+    if(typeof(w) == "undefined") {
+      w = new Worker("demo_workers.js");
+    }
+    w.onmessage = function(event) {
+      x.innerHTML = event.data;
+    };
+  } else {
+    x.innerHTML = "Sorry! No Web Worker support.";
+  }
+}
 
-    <section id="Chaos" class="chaos-theory">
-        <h2>CHAOS: The Beginning</h2>
-        
-        <p class="impact-statement">Chaos Theory is not disorder; it is the extreme sensitivity to initial conditions.</p>
-        
-       
-    </section>
-
-    <footer id="Contact">
-        <h2>Contact</h2>
-        <p>I am always available for collaborations on projects.</p>
-        <ul>
-            <li>Email: francesca.lonigro@uah.es</li>
-            <li>GitHub: https://github.com/flonigro</li>
-        </ul>
-        <p class="copyright">© 2025 Francesca Lonigro. QUANTUM.</p>
-    </footer>
+function stopWorker() { 
+  w.terminate();
+  w = undefined;
+}
+</script>
 
 </body>
 </html>
